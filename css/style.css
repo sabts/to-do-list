@@ -69,13 +69,15 @@ body{
     width: 20px;
     height: 20px;
     border-radius: 50%;
+    background-color: var(--task-bg-dark);
     border: 1px solid var(--text-color-completed);
 }
 .input-task{
     height: 3rem;
-   width: 20rem;
+    width: 327px;
     padding-left: 3.5rem;
     margin-bottom: 1rem;
+    font-size: 18px;
     color: var(--placeholder-color);
     background-color: var(--task-bg-dark);
     border-radius: 0.4rem;
@@ -90,7 +92,7 @@ body{
     align-items: center;
     justify-content: space-between;
     height: 3rem;
-    width: 20rem;
+    width: 327px;
     padding: 1rem 1.25rem;
     background-color: var(--task-bg-dark);
     border-bottom: 1px solid rgba(151, 151, 151, 0.3);
@@ -136,17 +138,35 @@ display: none;
 }
 .tasks-footer {
     display: flex;
-    width: 20rem;
+    width: 327px;
     justify-content: space-between;
     padding: 1.25rem;
-    font-size: 12px;
+    font-size: 0.75rem;
+    color: var(--placeholder-color);
     background-color: var(--task-bg-dark);
     margin-bottom: 1rem;
     border-radius: 0 0 0.4rem 0.4rem;
 }
 .filters{
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: space-evenly;
-    width: 20rem;
+    height: 3rem;
+    padding-inline: 5.0625rem;
+    background-color: var(--task-bg-dark);
+    border-radius: 0.3125rem;
+    width: 327px;
+    height: 48px;
+}
+.filter{
+    background: none;
+    border: none;
+    color: var(--text-color-completed);
+    font-weight: bold;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.filter--active{
+    color: var(--filter-active);
 }

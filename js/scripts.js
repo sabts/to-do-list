@@ -1,11 +1,13 @@
 const formElement = document.getElementById("form");
 const inputTaskElement = document.getElementById("input-task")
 const taskElement = document.getElementById("task")
+const itemsLeftElement = document.getElementById('items-left')
+const deleteCompleteElement = document.getElementById('delete-complete')
 
 const tasks = [
     {
       id: Date.now(),
-      name: '',
+      name: 'llorar por el código',
       completed: false
     }
   ];
@@ -36,7 +38,7 @@ const tasks = [
      //https://developer.mozilla.org/es/docs/Web/API/Element/setAttribute
       labelCheckboxElement.classList.add('task-text');
       labelCheckboxElement.textContent = task.name
-      if (task.name === "") return; //si no le agrego esto me crea un dos cosas a la lista: el primer objeto vacio y el nuevo que cree
+      //if (task.name === "") return; //si no le agrego esto me crea un dos cosas a la lista: el primer objeto vacio y el nuevo que cree Esto era cuando vacie el name de objeto
 
     
       //Eliminar task
@@ -64,7 +66,7 @@ insertTasks();
 }
 
 const createTask = (event) => {
-event.preventDefault()
+event.preventDefault();
 
 const taskText = inputTaskElement.value;
 if (taskText === "") return; 
@@ -82,3 +84,4 @@ inputTaskElement.value = "";
 }
 
 formElement.addEventListener("submit",createTask);
+insertTasks()
