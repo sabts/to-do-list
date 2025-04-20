@@ -84,9 +84,9 @@ const completeTask = (id) => {
     console.log(itemsLeftElement.textContent)
     
   }
-  if(taskElement.children[0].children[0].checked === true){
-  console.log('tarea ' + id + ' está completada') // al menos puedo comprobar aqui que las tareas si se estan marcando como completada
-  }  
+  //if(taskElement.children[0].children[0].checked === true){
+  //console.log('tarea ' + id + ' está completada') // al menos puedo comprobar aqui que las tareas si se estan marcando como completada
+  //}  
   insertTasks();   
   countItemsLeft();
 }
@@ -120,9 +120,24 @@ insertTasks ();
 inputTaskElement.value = "";
 }
 
+const deleteAllCompletedTasks = () => {
+const taskToDelete = tasks.filter((task) => !task.completed);
+
+if(taskToDelete)
+  {
+    tasks.splice(taskToDelete.length)
+  };
+
+  insertTasks();
+  countItemsLeft();
+  completeTask();
+}
+
 insertTasks();
 
 //formElement.addEventListener("submit",createTask);
 formElement.addEventListener('submit', event => {event.preventDefault();
                                                  createTask();       
-                                                 countItemsLeft();})
+                                                 countItemsLeft();});
+
+deleteCompleteElement.addEventListener('click', deleteAllCompletedTasks);
