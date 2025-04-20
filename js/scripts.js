@@ -3,6 +3,7 @@ const inputTaskElement = document.getElementById("input-task")
 const taskElement = document.getElementById("task")
 const itemsLeftElement = document.getElementById('items-left')
 const deleteCompleteElement = document.getElementById('delete-complete')
+const filtersElement = document.getElementById('filters')
 
 const tasks = [
     {
@@ -28,6 +29,16 @@ const countItemsLeft = () => {
   //seguro se sobreescribio con la funcion de (complete task) pero ya no se como solucionarlo, intentare darle otra vuelta más tarde pero si para el lunes sigue igual preguntare...
   }
 
+const filterTasks = () => {
+  //console.log('selecccionaste el filtro: ' + event.target.dataset.filter);
+  
+  const allTaskFilter = event.target.dataset.filter === 'all';
+  const activeTaskFilter = event.target.dataset.filter === 'active';
+  const completedTaskFilter = event.target.dataset.filter === 'completed';
+  //console.log("All: ", AllTaskFilter); todos
+  //console.log("Active: ", activeTaskFilter); sin completar
+  //console.log("Completed: ", completedTaskFilter); completado
+};
 
 const insertTasks = () =>{
   taskElement.textContent = "";  //el padre (el taskElement)
@@ -120,6 +131,30 @@ insertTasks ();
 inputTaskElement.value = "";
 }
 
+const setFilter = filterTarget => {
+
+  if(allTaskFilter){
+    tasks;
+    allTaskFilter.classList.add('filter--active');
+    completedTaskFilter.classList.remove('filter--active');
+    activeTaskFilter.classList.remove('filter--active');
+  } else if (activeTaskFilter)
+  {tasks.completed;
+    allTaskFilter.classList.remove('filter--active');
+    completedTaskFilter.classList.remove('filter--active');
+    activeTaskFilter.classList.add('filter--active');
+  } 
+  else if (completedTaskFilter){
+    !tasks.completed
+    completedTaskFilter.classList.add('filter--active');
+    activeTaskFilter.classList.remove('filter--active');
+    allTaskFilter.classList.remove('filter--active');
+  }
+
+  insertTasks()
+  filterTasks()
+}
+
 const deleteAllCompletedTasks = () => {
 const taskToDelete = tasks.filter((task) => !task.completed);
 
@@ -133,11 +168,12 @@ if(taskToDelete)
   completeTask();
 }
 
-insertTasks();
+insertTasks(filterTasks);
 
 //formElement.addEventListener("submit",createTask);
 formElement.addEventListener('submit', event => {event.preventDefault();
                                                  createTask();       
                                                  countItemsLeft();});
 
+filtersElement.addEventListener('click', event=> {filterTasks(); setFilter()});
 deleteCompleteElement.addEventListener('click', deleteAllCompletedTasks);
