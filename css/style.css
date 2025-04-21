@@ -167,6 +167,6 @@ display: none;
     cursor: pointer;
 }
 
-.filter--active{
+.filter-active{
     color: var(--filter-active);
 }
