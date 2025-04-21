@@ -13,7 +13,7 @@ const tasks = [
     }
 ];
 
-//let allTask = [];
+let currentFilter = 'all';
 
 
 const countItemsLeft = () => {  
@@ -30,14 +30,17 @@ const countItemsLeft = () => {
   }
 
 const filterTasks = () => {
-  //console.log('selecccionaste el filtro: ' + event.target.dataset.filter);
-  
-  const allTaskFilter = event.target.dataset.filter === 'all';
-  const activeTaskFilter = event.target.dataset.filter === 'active';
-  const completedTaskFilter = event.target.dataset.filter === 'completed';
-  //console.log("All: ", AllTaskFilter); todos
-  //console.log("Active: ", activeTaskFilter); sin completar
-  //console.log("Completed: ", completedTaskFilter); completado
+  let filteringTask = tasks;
+
+  if(currentFilter === 'all'){
+    filterTasks = tasks;}
+    else if(currentFilter === 'active') {
+    filteringTask = tasks.filter(task => task.completed)}
+    else if (currentFilter === 'completed') {
+      filteringTask = tasks.filter(task => !task.completed)};
+   //console.log('selecccionaste el filtro: ' + event.target.dataset.filter); 
+
+  insertTasks();
 };
 
 const insertTasks = () =>{
@@ -133,23 +136,26 @@ inputTaskElement.value = "";
 
 const setFilter = filterTarget => {
 
-  if(allTaskFilter){
-    tasks;
-    allTaskFilter.classList.add('filter--active');
-    completedTaskFilter.classList.remove('filter--active');
-    activeTaskFilter.classList.remove('filter--active');
-  } else if (activeTaskFilter)
-  {tasks.completed;
-    allTaskFilter.classList.remove('filter--active');
-    completedTaskFilter.classList.remove('filter--active');
-    activeTaskFilter.classList.add('filter--active');
-  } 
-  else if (completedTaskFilter){
-    !tasks.completed
-    completedTaskFilter.classList.add('filter--active');
-    activeTaskFilter.classList.remove('filter--active');
-    allTaskFilter.classList.remove('filter--active');
-  }
+  taskElement.textContent = "";
+  //currentFilter;
+
+  //if(currentFilter){
+   // tasks;
+   // filtersElement[0].classList.add('filter--active');
+   // filtersElement[1].classList.remove('filter--active');
+   // filtersElement[2].classList.remove('filter--active');
+  //} else if (currentFilter === 'active')
+  //{tasks.completed;
+   // filtersElement[0].classList.remove('filter--active');
+   // filtersElement[2].classList.remove('filter--active');
+   // filtersElement[1].classList.add('filter--active');
+  //} 
+  //else if (currentFilter === 'completed'){
+   // !tasks.completed
+    //filtersElement[2].classList.add('filter--active');
+    //filtersElement[0].classList.remove('filter--active');
+    //filtersElement[1].classList.remove('filter--active');
+  //}
 
   insertTasks()
   filterTasks()
@@ -168,7 +174,8 @@ if(taskToDelete)
   completeTask();
 }
 
-insertTasks(filterTasks);
+insertTasks();
+filterTasks()
 
 //formElement.addEventListener("submit",createTask);
 formElement.addEventListener('submit', event => {event.preventDefault();
