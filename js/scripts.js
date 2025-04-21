@@ -4,6 +4,7 @@ const taskElement = document.getElementById("task");
 const itemsLeftElement = document.getElementById("items-left");
 const deleteCompleteElement = document.getElementById("delete-complete");
 const filtersElement = document.getElementById("filters");
+const switchElement = document.getElementById("switch")
 
 let tasks = [
   {
@@ -14,6 +15,30 @@ let tasks = [
 ];
 
 let currentFilter = 'all';
+
+let darkMode = false;
+
+const changeTheme = () => {
+  darkMode = !darkMode;
+
+  if(darkMode){
+    document.body.classList.remove('body-light');
+    document.querySelector(".header").classList.remove("header-light");
+    document.querySelector(".label-task").classList.remove("label-task-light");
+    document.querySelector(".input-task").classList.remove("input-task-light");
+    document.querySelector(".task-container").classList.remove("task-container-light");
+    document.querySelector(".tasks-footer").classList.remove("tasks-footer-light");
+    document.querySelector(".filters").classList.remove("filters-light")
+  }else{
+    document.body.classList.add('body-light');
+    document.querySelector(".header").classList.add("header-light");
+    document.querySelector(".label-task").classList.add("label-task-light");
+    document.querySelector(".input-task").classList.add("input-task-light");
+    document.querySelector(".task-container").classList.add("task-container-light");
+    document.querySelector(".tasks-footer").classList.add("tasks-footer-light");
+    document.querySelector(".filters").classList.add("filters-light")
+  }
+}
 
 const countItemsLeft = () => {
   const uptadetasks = tasks.filter(task => !task.completed); // me devuelve lista de las tareas que no tiene el checked (false) --- si no lo tengo como  const uptadetasks me borra los items true
@@ -140,7 +165,8 @@ if (currentFilter === "all") {
 } 
 else if (currentFilter === "active") {
   insertTasks(activeTask);
-} else if (currentFilter === "completed") {
+} 
+else if (currentFilter === "completed") {
   insertTasks(completeTask);
 }
   insertTasks();
@@ -167,3 +193,4 @@ formElement.addEventListener("submit", event => {
 });
 filtersElement.addEventListener('click', setFilter);
 deleteCompleteElement.addEventListener("click", deleteAllCompletedTasks);
+switchElement.addEventListener("click", changeTheme)
