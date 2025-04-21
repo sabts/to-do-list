@@ -13,33 +13,38 @@ let tasks = [
   },
 ];
 
-let currentFilter = "all";
+let currentFilter = 'all';
 
 const countItemsLeft = () => {
   const uptadetasks = tasks.filter(task => !task.completed); // me devuelve lista de las tareas que no tiene el checked (false) --- si no lo tengo como  const uptadetasks me borra los items true
   console.log(tasks);
   if (tasks.length === 0) {
     itemsLeftElement.textContent = `No item left`;
-  } else {
+  } else if(uptadetasks.length === 0) {
+    itemsLeftElement.textContent = `All task completed`;
+   } else {
     itemsLeftElement.textContent = `${uptadetasks.length} items left`;
-  }
-  if (!uptadetasks.length >= 0) {
-    itemsLeftElement.textContent = `All task completed`; //no actuliza aunque agregas otra tarea
   }
 };
 
 const filterTasks = () => {
-  let filteringTask = tasks;
+  const filterType = event.target.dataset.filter;
+  console.log("Filter: ", filterType);
 
-  if (currentFilter === "all") {
-    filteringTask = tasks;
-  } else if (currentFilter === "active") {
-    filteringTask = tasks.filter(task => task.completed);
-  } else if (currentFilter === "completed") {
-    filteringTask = tasks.filter(task => !task.completed);
+
+  if(filterType === 'all'){
+    filtersElement.children[0].classList.add("filter-active");
+    filtersElement.children[1].classList.remove("filter-active");
+    filtersElement.children[2].classList.remove("filter-active");
+  } else if (filterType === 'active'){
+    filtersElement.children[0].classList.remove("filter-active");
+    filtersElement.children[2].classList.remove("filter-active");
+    filtersElement.children[1].classList.add("filter-active");
+  } else{
+    filtersElement.children[2].classList.add("filter-active");
+    filtersElement.children[0].classList.remove("filter-active");
+    filtersElement.children[1].classList.remove("filter-active");
   }
-  // console.log("selecccionaste el filtro: " + event.target.dataset.filter);
-
   insertTasks();
 };
 
@@ -92,7 +97,6 @@ const completeTask = id => {
       // !tasks[i].completed es true (completada)
       break;
     }
-
     //if(taskElement.children[0].children[0].checked === true){
     //console.log('tarea ' + id + ' está completada') // al menos puedo comprobar aqui que las tareas si se estan marcando como completada
   }
@@ -100,7 +104,7 @@ const completeTask = id => {
   countItemsLeft();
 };
 
-//no se editan las tareas en el DOM ni se eliminan del DOM, completar una tarea implica cambiar el completed de true a false o de false a true y eliminarla implica eliminarla del array porque cada vez que algo cambie volverás a pintar todo el array entero con sus cambios en el DOM
+//Recordatorio: no se editan las tareas en el DOM ni se eliminan del DOM, completar una tarea implica cambiar el completed de true a false o de false a true y eliminarla implica eliminarla del array porque cada vez que algo cambie volverás a pintar todo el array entero con sus cambios en el DOM
 const deleteTask = id => {
   tasks = tasks.filter(task => task.id !== id);
   insertTasks();
@@ -125,27 +129,20 @@ const createTask = event => {
   countItemsLeft();
 };
 
-const setFilter = filterTarget => {
-  taskElement.textContent = "";
-  currentFilter;
+const setFilter = () => {
+currentFilter = event.target.dataset.filter;
 
-  if (currentFilter === "all") {
-    tasks;
-    filtersElement[0].classList.add("filter-active");
-    filtersElement[1].classList.remove("filter-active");
-    filtersElement[2].classList.remove("filter-active");
-  } else if (currentFilter === "active") {
-    tasks.completed;
-    filtersElement[0].classList.remove("filter-active");
-    filtersElement[2].classList.remove("filter-active");
-    filtersElement[1].classList.add("filter-active");
-  } else {
-    !tasks.completed;
-    filtersElement[2].classList.add("filter-active");
-    filtersElement[0].classList.remove("filter-active");
-    filtersElement[1].classList.remove("filter-active");
-  }
+const activeTask = tasks.filter(task => !task.completed);
+const completeTask = tasks.filter(task => task.completed)
 
+if (currentFilter === "all") {
+  insertTasks(tasks)
+} 
+else if (currentFilter === "active") {
+  insertTasks(activeTask);
+} else if (currentFilter === "completed") {
+  insertTasks(completeTask);
+}
   insertTasks();
   filterTasks();
 };
@@ -163,14 +160,10 @@ const deleteAllCompletedTasks = () => {
 };
 
 insertTasks();
-filterTasks();
 
 formElement.addEventListener("submit", event => {
   event.preventDefault();
   createTask();
 });
-
-filtersElement.addEventListener("click", event => {
-  setFilter();
-});
+filtersElement.addEventListener('click', setFilter);
 deleteCompleteElement.addEventListener("click", deleteAllCompletedTasks);
