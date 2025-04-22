@@ -23,6 +23,7 @@ const changeTheme = () => {
 
   if(darkMode){
     document.body.classList.remove('body-light');
+    switchElement.src = "/asset/icon-moon.svg";
     document.querySelector(".header").classList.remove("header-light");
     document.querySelector(".label-task").classList.remove("label-task-light");
     document.querySelector(".input-task").classList.remove("input-task-light");
@@ -31,6 +32,7 @@ const changeTheme = () => {
     document.querySelector(".filters").classList.remove("filters-light")
   }else{
     document.body.classList.add('body-light');
+    switchElement.src = "asset/icon-sun.svg";
     document.querySelector(".header").classList.add("header-light");
     document.querySelector(".label-task").classList.add("label-task-light");
     document.querySelector(".input-task").classList.add("input-task-light");
