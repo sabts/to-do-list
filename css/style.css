@@ -1,7 +1,6 @@
 :root{
     --body-bg-light: #fafafa;
     --body-bg-dark: #171823;
-     --header-image: url(../assets/images/bg-mobile-light.jpg);
      --task-bg-light: #fff;
      --task-bg-dark: #25273D;
      --text-color-light: #494c6b;
@@ -38,9 +37,7 @@ body{
     font-family: sans-serif;
     background-color: var(--body-bg-dark);
 }
-body.body-light{
-    background-color: var(--body-bg-light);
-}
+
 .header{
     background-image: url(/asset/bg-mobile-dark.jpg);
     background-repeat: no-repeat;
@@ -70,7 +67,6 @@ body.body-light{
     top: 6.75rem;
     left: 50%;
     transform: translateX(-50%);
- 
 }
 .form {
     position: relative;
@@ -85,12 +81,6 @@ body.body-light{
     background-color: transparent;
     border: 1px solid var(--text-color-completed);
 }
-xw
-.task-container-light {
-    background-color: var(--task-bg-light);
-    box-shadow: var(--tasks-shadow-light);
-}
-
 .input-task{
     height: 3rem;
     width: 327px;
@@ -105,10 +95,6 @@ xw
     box-shadow: 0 15px 15px -5px var(--tasks-shadow);
 }
 
-.input-task-light{
-    background-color: var(--task-bg-light);
-    box-shadow: var(--tasks-shadow-light);
-}
 .task-container{
     position: relative;
     display: flex;
@@ -121,17 +107,13 @@ xw
     border-bottom: 1px solid rgba(151, 151, 151, 0.3);
     cursor: pointer;
 }
-.task-container-light{
-    background-color: var(--task-bg-light);
-    border-bottom: 1px solid rgba(151, 151, 151, 0.3);
-    color: var(--text-color-light);
-}
+
 .task-check{
 display: none;
 }
 .task-text{
     padding-left: 2.5rem;
-    color: var(--text-color-light);
+    color: var(--placeholder-color);
 }
 
 .task-text::after {
@@ -177,18 +159,6 @@ display: none;
     border-radius: 0 0 0.4rem 0.4rem;
     box-shadow: var(--tasks-shadow);
 }
-.tasks-footer-light {
-    display: flex;
-    width: 327px;
-    justify-content: space-between;
-    padding: 1.25rem;
-    font-size: 0.75rem;
-    color: var(--text-color-light);
-    background-color: var(--task-bg-light);
-    margin-bottom: 1rem;
-    border-radius: 0 0 0.4rem 0.4rem;
-    box-shadow: var(--tasks-shadow-light);
-}
 .filters{
     display: flex;
     align-items: center;
@@ -196,17 +166,6 @@ display: none;
     height: 3rem;
     padding-inline: 5.0625rem;
     background-color: var(--task-bg-dark);
-    border-radius: 0.3125rem;
-    width: 327px;
-    height: 48px;
-}
-.filters-light{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    height: 3rem;
-    padding-inline: 5.0625rem;
-    background-color: var(--task-bg-light);
     border-radius: 0.3125rem;
     width: 327px;
     height: 48px;
@@ -223,3 +182,37 @@ display: none;
 .filter-active{
     color: var(--filter-active);
 }
+
+/*light mode*/
+body.light {
+    background-color: var(--body-bg-light);
+  }
+  
+  body.light .task-container {
+    background-color: var(--task-bg-light);
+    box-shadow: var(--tasks-shadow-light);
+    color: var(--text-color-light);
+  }
+  
+  body.light .input-task {
+    background-color: var(--task-bg-light);
+    box-shadow: var(--tasks-shadow-light);
+  }
+  
+  body.light .tasks-footer {
+    background-color: var(--task-bg-light);
+    box-shadow: var(--tasks-shadow-light);
+    color: var(--text-color-light);
+  }
+  
+  body.light .filters {
+    background-color: var(--task-bg-light);
+  }
+  
+  body.light .task-text {
+    color: var(--text-color-light);
+  }
+  
+  body.light .task-text::after {
+    border: 1px solid var(--text-color-completed);
+  }

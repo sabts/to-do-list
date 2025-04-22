@@ -14,31 +14,17 @@ let tasks = [
   },
 ];
 
-let currentFilter = 'all';
-
 let darkMode = false;
 
 const changeTheme = () => {
   darkMode = !darkMode;
 
   if(darkMode){
-    document.body.classList.remove('body-light');
+    document.body.classList.remove('light');
     switchElement.src = "/asset/icon-moon.svg";
-    document.querySelector(".header").classList.remove("header-light");
-    document.querySelector(".label-task").classList.remove("label-task-light");
-    document.querySelector(".input-task").classList.remove("input-task-light");
-    document.querySelector(".task-container").classList.remove("task-container-light");
-    document.querySelector(".tasks-footer").classList.remove("tasks-footer-light");
-    document.querySelector(".filters").classList.remove("filters-light")
   }else{
-    document.body.classList.add('body-light');
+    document.body.classList.add('light');
     switchElement.src = "asset/icon-sun.svg";
-    document.querySelector(".header").classList.add("header-light");
-    document.querySelector(".label-task").classList.add("label-task-light");
-    document.querySelector(".input-task").classList.add("input-task-light");
-    document.querySelector(".task-container").classList.add("task-container-light");
-    document.querySelector(".tasks-footer").classList.add("tasks-footer-light");
-    document.querySelector(".filters").classList.add("filters-light")
   }
 }
 
@@ -55,31 +41,23 @@ const countItemsLeft = () => {
 };
 
 const filterTasks = () => {
-  const filterType = event.target.dataset.filter;
-  console.log("Filter: ", filterType);
+  const filterType = filtersElement.querySelector('.filter-active').dataset.filter;
+  let taskToRender = tasks;
 
-
-  if(filterType === 'all'){
-    filtersElement.children[0].classList.add("filter-active");
-    filtersElement.children[1].classList.remove("filter-active");
-    filtersElement.children[2].classList.remove("filter-active");
-  } else if (filterType === 'active'){
-    filtersElement.children[0].classList.remove("filter-active");
-    filtersElement.children[2].classList.remove("filter-active");
-    filtersElement.children[1].classList.add("filter-active");
-  } else{
-    filtersElement.children[2].classList.add("filter-active");
-    filtersElement.children[0].classList.remove("filter-active");
-    filtersElement.children[1].classList.remove("filter-active");
+  if (filterType === 'completed') {
+    taskToRender = tasks.filter(task => task.completed); 
+  } else if (filterType === 'active') {
+    taskToRender = tasks.filter(task => !task.completed);
   }
-  insertTasks();
+
+  insertTasks(taskToRender);
 };
 
-const insertTasks = () => {
+const insertTasks = (tasks) => {
   taskElement.textContent = ""; //el padre (el taskElement)
 
   tasks.forEach(task => {
-    //El div --- el hijo 0 del task element
+    //El div --- el hijo 0 del task element 
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
     //taskContainer.dataset.id = task.id;
@@ -127,14 +105,14 @@ const completeTask = id => {
     //if(taskElement.children[0].children[0].checked === true){
     //console.log('tarea ' + id + ' está completada') // al menos puedo comprobar aqui que las tareas si se estan marcando como completada
   }
-  insertTasks();
+  filterTasks()
   countItemsLeft();
 };
 
 //Recordatorio: no se editan las tareas en el DOM ni se eliminan del DOM, completar una tarea implica cambiar el completed de true a false o de false a true y eliminarla implica eliminarla del array porque cada vez que algo cambie volverás a pintar todo el array entero con sus cambios en el DOM
 const deleteTask = id => {
   tasks = tasks.filter(task => task.id !== id);
-  insertTasks();
+  filterTasks()
   countItemsLeft();
 };
 
@@ -150,28 +128,21 @@ const createTask = event => {
   //console.log("Nuevo ID:", newTask.id);
 
   tasks.push(newTask);
-  insertTasks();
   inputTaskElement.value = "";
 
+  filterTasks()
   countItemsLeft();
 };
 
-const setFilter = () => {
+const setFilter = (event) => {
 currentFilter = event.target.dataset.filter;
 
-const activeTask = tasks.filter(task => !task.completed);
-const completeTask = tasks.filter(task => task.completed)
+if (!currentFilter) return;
 
-if (currentFilter === "all") {
-  insertTasks(tasks)
-} 
-else if (currentFilter === "active") {
-  insertTasks(activeTask);
-} 
-else if (currentFilter === "completed") {
-  insertTasks(completeTask);
-}
-  insertTasks();
+filtersElement.querySelector(".filter-active").classList.remove("filter-active")
+
+event.target.classList.add('filter-active');
+
   filterTasks();
 };
 
@@ -187,7 +158,7 @@ const deleteAllCompletedTasks = () => {
   completeTask();
 };
 
-insertTasks();
+filterTasks();
 
 formElement.addEventListener("submit", event => {
   event.preventDefault();
